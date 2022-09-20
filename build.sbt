@@ -60,6 +60,7 @@ lazy val `app` = project
       "org.http4s" %% "http4s-circe" % projectDeps.Http4sVersion,
       "org.http4s" %% "http4s-dsl" % projectDeps.Http4sVersion,
       "org.http4s" %% "http4s-circe" % projectDeps.Http4sVersion,
+      "co.fs2" %% "fs2-io" % "3.3.0",
       "io.circe" %% "circe-core" % projectDeps.CirceVersion,
       "io.circe" %% "circe-generic" % projectDeps.CirceVersion,
       "io.circe" %% "circe-parser" % projectDeps.CirceVersion,
