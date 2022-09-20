@@ -7,12 +7,14 @@ object Main extends IOApp with PhraseCount with Utils {
 
   override def run(args: List[String]): IO[ExitCode] = {
     val stream = if (args.nonEmpty) {
+      // Read the files line-by-line
       Stream
-        .fromIterator[IO](args.map(streamFile).iterator, 5)
+        .fromIterator[IO](args.map(streamFile).iterator, 10)
         .parJoinUnbounded
         .through(utf8Lines)
     } else {
-      io.stdin[IO](100)
+      // If there are no args, read from stdin
+      io.stdin[IO](1e6.toInt)
         .through(utf8Lines)
     }
 

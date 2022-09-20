@@ -80,6 +80,7 @@ lazy val tests = project
   )
   .dependsOn(`app`)
   .aggregate(`app`)
+  .enablePlugins(PackPlugin)
 
 lazy val root = project
   .in(file("."))
