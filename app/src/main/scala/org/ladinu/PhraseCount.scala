@@ -7,16 +7,20 @@ import fs2._
 trait PhraseCount {
 
   def isHyphen(chr: Char): Boolean = chr === '-'
+  def toWords(line: String): Stream[IO, String] =
+    Stream.fromIterator[IO](line.split(" ").iterator, 100)
+
+  def removePunctuations(w: String): String =
+    w.replaceAll("\\p{Punct}", "")
+
+  def removeUnicodeQuotes(w: String): String =
+    w.replaceAll("“", "").replace("”", "")
 
   def phraseCountStream: Pipe[IO, String, List[((String, String, String), Int)]] = in =>
     in.map(line => if (line.lastOption.exists(isHyphen)) line.dropRight(1) else line)
-      // Split line into words
-      .flatMap(line => Stream.fromIterator[IO](line.split(" ").iterator, 100))
-      // Remove punctuations
-      .map(w => w.replaceAll("\\p{Punct}", ""))
-      // Remove unicode quotation
-      .map(w => w.replaceAll("“", "").replace("”", ""))
-      // Ignore whitespaces
+      .flatMap(toWords)
+      .map(removePunctuations)
+      .map(removeUnicodeQuotes)
       .filter(a => !a.isBlank)
       // Lowercase & trim
       .map(_.toLowerCase.trim)

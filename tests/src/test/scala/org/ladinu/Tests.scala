@@ -19,7 +19,7 @@ object Tests extends IOApp with PhraseCount with Utils {
       .parJoinUnbounded
 
   val removePunctuations: IO[Boolean] =
-    byteStream("I love\nsandwiches.", "(I LOVE SANDWICHES!!)")
+    byteStream("I love\nsandwiches.", "(I LOVE SANDWICHES!?!?)")
       .through(utf8Lines)
       .through(phraseCountStream)
       .map(_.headOption.map(_._2).getOrElse(0))
