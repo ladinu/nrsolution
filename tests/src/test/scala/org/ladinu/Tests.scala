@@ -34,6 +34,20 @@ object Tests extends IOApp with PhraseCount with Utils {
       .toList
       .map(_.headOption.exists(_ == 2))
 
+  val properlyFormatOutput: IO[Boolean] = byteStream(
+    "I like cats & dogs."
+  )
+    .through(utf8Lines)
+    .through(phraseCountStream)
+    .through(fmtCount)
+    .compile
+    .toList
+    .map(_.headOption.exists { actual =>
+      actual ==
+        """like cats dogs - 1
+        |i like cats - 1""".stripMargin
+    })
+
   override def run(args: List[String]): IO[ExitCode] = {
 
     def test(name: String, op: IO[Boolean]): IO[Unit] = op
@@ -44,7 +58,8 @@ object Tests extends IOApp with PhraseCount with Utils {
 
     List(
       "Ignore punctuations" -> removePunctuations,
-      "Handle unicode quotes" -> handleUnicodeQuotes
+      "Handle unicode quotes" -> handleUnicodeQuotes,
+      "Properly format output" -> properlyFormatOutput
     )
       .map(a => test(a._1, a._2))
       .parSequence
