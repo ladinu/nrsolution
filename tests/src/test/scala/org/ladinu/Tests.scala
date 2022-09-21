@@ -9,17 +9,24 @@ object Tests extends IOApp with PhraseCount with Utils {
   def byteStream(strs: String*): Stream[IO, Byte] =
     Stream
       .fromIterator[IO](
-        strs
-          .map { str =>
-            Stream.fromIterator[IO](s"$str\n".getBytes.iterator, 100)
-          }
-          .iterator,
+        strs.map { str =>
+          Stream.fromIterator[IO](s"$str\n".getBytes.iterator, 100)
+        }.iterator,
         100
       )
       .parJoinUnbounded
 
   val removePunctuations: IO[Boolean] =
     byteStream("I love\nsandwiches.", "(I LOVE SANDWICHES!?!?)")
+      .through(utf8Lines)
+      .through(phraseCountStream)
+      .map(_.headOption.map(_._2).getOrElse(0))
+      .compile
+      .toList
+      .map(_.headOption.exists(_ == 2))
+
+  val handleUnicodeQuotes: IO[Boolean] =
+    byteStream("I love \"sandwiches\"", "I love “sandwiches“")
       .through(utf8Lines)
       .through(phraseCountStream)
       .map(_.headOption.map(_._2).getOrElse(0))
@@ -36,7 +43,8 @@ object Tests extends IOApp with PhraseCount with Utils {
       }
 
     List(
-      "Ignore punctuations" -> removePunctuations
+      "Ignore punctuations" -> removePunctuations,
+      "Handle unicode quotes" -> handleUnicodeQuotes
     )
       .map(a => test(a._1, a._2))
       .parSequence
