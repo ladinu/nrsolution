@@ -2,7 +2,7 @@
 
 ## Usage
 
-Download the zip files, extract them and run the shell script in `bin/` folder. For the main app it
+Download the zip files in `dist/` folder, extract them and run the shell script in `bin/` folder. For the main app it
 is `app-0.0.1/bin/app` and `tests-0.0.1/bin/testApp` for the tests.
 
 Please note that this requires JVM 11+. Make sure that you have `JAVA_HOME` environment variable properly set.
