@@ -18,7 +18,7 @@ OpenJDK 64-Bit Server VM Zulu11.48+21-CA (build 11.0.11+9-LTS, mixed mode)
 
 ## Limitations
 * Doesn't handle all unicode chars
-* Doesn't handle errors gracefully
+* No user friendly errors
 * Performance is bounded by amount of space (RAM)
 
 ## Cool Features
