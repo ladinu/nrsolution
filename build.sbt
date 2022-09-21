@@ -54,6 +54,7 @@ lazy val `app` = project
   .in(file("app"))
   .settings(commonSettings: _*)
   .settings(
+    packMain := Map("app" -> "org.ladinu.Main"),
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-effect" % projectDeps.CatsEffectVersion,
       "org.http4s" %% "http4s-blaze-client" % projectDeps.Http4sVersion,
@@ -73,6 +74,7 @@ lazy val tests = project
   .in(file("tests"))
   .settings(commonSettings: _*)
   .settings(
+    packMain := Map("testApp" -> "org.ladinu.Tests"),
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % projectDeps.ScalaTestVersion % "test",
       "org.scalatestplus" %% "scalacheck-1-16" % projectDeps.ScalaTestPlusScalaCheckVersion % "test"
