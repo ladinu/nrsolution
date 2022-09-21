@@ -15,13 +15,19 @@ OpenJDK Runtime Environment Zulu11.48+21-CA (build 11.0.11+9-LTS)
 OpenJDK 64-Bit Server VM Zulu11.48+21-CA (build 11.0.11+9-LTS, mixed mode)
 ````
 
-## Limitations
 
+## Limitations
 * Doesn't handle all unicode chars
 * Doesn't handle errors gracefully
+* Performance is bounded by amount of space (RAM)
+
+## Cool Features
+* Files are processed as non-blocking streams
+* Up to 10 files are processed in parallel
 
 ## Future Improvements
-
+* Use a probabilistic data structure like a bloom-filter to control for space
 * Add better error messages (like when files are not found)
-* Add property based tests and a real test framework 
+* Write those errors to stderr
+* Add property based tests and use a real test framework
 * Add more test cases
