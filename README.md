@@ -1,51 +1,27 @@
-# shortest-path
+# Solution
 
 ## Usage
 
-You run the program in sbt shell like this ```shortest-path/run <args>```
+Download the zip files, extract them and run the shell script in `bin/` folder. For the main app it
+is `app-0.0.1/bin/main` and `tests-0.0.1/bin/main` for the tests.
 
-This program has two subcommands `shortest-path` and `dot`. Following are the
-usage for each subcommand. Note that this require JVM 11+
+Please note that this requires JVM 11+. Make sure that you have `JAVA_HOME` environment variable properly set.
+To check, run the following
 
-
-```text
-Usage: app shortest-path --data-uri <string> --start <string> --end <string>
-
-Find the shortest path between two intersections
-
-Options and flags:
-    --help
-        Display this help text.
-    --data-uri <string>
-        file:// or https:// 
-    --start <string>
-        Starting intersection. For example A:1
-    --end <string>
-        Finishing intersection. For example B:4
-```
-
-```text
-Usage: app dot --data-uri <string>
-
-Output traffic data to DOT format
-
-Options and flags:
-    --help
-        Display this help text.
-    --data-uri <string>
-        file:// or https:// 
-```
+```bash
+$ java -version
+openjdk version "11.0.11" 2021-04-20 LTS
+OpenJDK Runtime Environment Zulu11.48+21-CA (build 11.0.11+9-LTS)
+OpenJDK 64-Bit Server VM Zulu11.48+21-CA (build 11.0.11+9-LTS, mixed mode)
+````
 
 ## Limitations
 
-* This does not handle negative transit times 
-* This does not handle if "expressways" are defined in the input JSON
-* This is calculating the average transit time between intersections
+* Doesn't handle all unicode chars
+* Doesn't handle errors gracefully
 
 ## Future Improvements
 
-* Use a graph library (such as [JGraphT](https://jgrapht.org/) or [Neo4j](https://neo4j.com/)) that's optimized to
-  handle path queries
-* Use a proper logger instead of `println()`
-* Handle all errors in an `EitherT` context
-* Add more property based tests
+* Add better error messages (like when files are not found)
+* Add property based tests and a real test framework 
+* Add more test cases
